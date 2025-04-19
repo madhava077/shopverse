@@ -1,6 +1,6 @@
 package com.shopverse.shopverse.model;
 
-import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,9 +15,9 @@ public class user {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
-	@Column(unique = true)
 	private String username;
+    
+    @Column(unique = true)
 	private String email;
 	private String password;
 	private String role;
