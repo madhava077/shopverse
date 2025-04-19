@@ -1,50 +1,57 @@
 package com.shopverse.shopverse.Dto;
 
 public class ProductDto {
-	private Long id;
-	private String name;
+	private long id;
+	private String productname;
 	private String description;
-	private Double price;
-
+	private double price;
+	private int stock;
+	private String category;
 	public ProductDto() {
 	}
-
-	public ProductDto(Long id, String name, String description, Double price) {
+	public ProductDto(long id, String productname, String description, double price, int stock, String category) {
 		this.id = id;
-		this.name = name;
+		this.productname = productname;
 		this.description = description;
 		this.price = price;
+		this.stock = stock;
+		this.category = category;
 	}
-
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
+	public String getProductname() {
+		return productname;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setProductname(String productname) {
+		this.productname = productname;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Double getPrice() {
+	public double getPrice() {
 		return price;
 	}
-
-	public void setPrice(Double price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 }
