@@ -1,36 +1,36 @@
 package com.shopverse.shopverse.Dto;
 
 public class OrderItemDto {
-    private long id;
-    private long orderid;
-    private long productid;
+    private Long id;
+    private Long orderid;
+    private Long productid;
     private int quantity;
     private double price;
     public OrderItemDto() {
     }
-    public OrderItemDto(long id, long orderid, long productid, int quantity, double price) {
+    public OrderItemDto(Long id, Long orderid, Long productid, int quantity, double price) {
         this.id = id;
         this.orderid = orderid;
         this.productid = productid;
         this.quantity = quantity;
         this.price = price;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
-    public long getOrderid() {
+    public Long getOrderid() {
         return orderid;
     }
-    public void setOrderid(long orderid) {
+    public void setOrderid(Long orderid) {
         this.orderid = orderid;
     }
-    public long getProductid() {
+    public Long getProductid() {
         return productid;
     }
-    public void setProductid(long productid) {
+    public void setProductid(Long productid) {
         this.productid = productid;
     }
     public int getQuantity() {
@@ -45,5 +45,6 @@ public class OrderItemDto {
     public void setPrice(double price) {
         this.price = price;
     }
+    
     
 }

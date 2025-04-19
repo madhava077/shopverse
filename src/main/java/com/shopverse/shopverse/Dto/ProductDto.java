@@ -1,7 +1,7 @@
 package com.shopverse.shopverse.Dto;
 
 public class ProductDto {
-	private long id;
+	private Long id;
 	private String productname;
 	private String description;
 	private double price;
@@ -9,7 +9,7 @@ public class ProductDto {
 	private String category;
 	public ProductDto() {
 	}
-	public ProductDto(long id, String productname, String description, double price, int stock, String category) {
+	public ProductDto(Long id, String productname, String description, double price, int stock, String category) {
 		this.id = id;
 		this.productname = productname;
 		this.description = description;
@@ -17,10 +17,10 @@ public class ProductDto {
 		this.stock = stock;
 		this.category = category;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getProductname() {
@@ -53,5 +53,5 @@ public class ProductDto {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
+	
 }

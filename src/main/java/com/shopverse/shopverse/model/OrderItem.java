@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name="orderid")
     private Orders order;
@@ -27,17 +27,17 @@ public class OrderItem {
     private double price;
     public OrderItem() {
     }
-    public OrderItem(long id, Orders order, Product product, int quantity, double price) {
+    public OrderItem(Long id, Orders order, Product product, int quantity, double price) {
         this.id = id;
         this.order = order;
         this.product = product;
         this.quantity = quantity;
         this.price = price;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public Orders getOrder() {
@@ -64,5 +64,6 @@ public class OrderItem {
     public void setPrice(double price) {
         this.price = price;
     }
+    
     
 }

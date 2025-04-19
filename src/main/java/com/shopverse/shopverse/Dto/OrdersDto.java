@@ -3,30 +3,30 @@ package com.shopverse.shopverse.Dto;
 import java.time.LocalDate;
 
 public class OrdersDto {
-    private long id;
-    private long user_id;
+    private Long id;
+    private Long user_id;
     private LocalDate orderDate;
     private double totalAmount;
     private String status;
     public OrdersDto() {
     }
-    public OrdersDto(long id, long user_id, LocalDate orderDate, double totalAmount, String status) {
+    public OrdersDto(Long id, Long user_id, LocalDate orderDate, double totalAmount, String status) {
         this.id = id;
         this.user_id = user_id;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
         this.status = status;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
-    public long getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
-    public void setUser_id(long user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
     public LocalDate getOrderDate() {
@@ -47,4 +47,5 @@ public class OrdersDto {
     public void setStatus(String status) {
         this.status = status;
     }
+    
 }
