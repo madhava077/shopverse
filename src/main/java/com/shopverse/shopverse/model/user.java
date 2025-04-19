@@ -22,8 +22,10 @@ public class User {
 	private String password;
 	private String role;
 	private String address;
+
+    public User() {
+    }
     
-	
 	public User(int id, String username, String email, String password, String role, String address) {
         this.id = id;
         this.username = username;
