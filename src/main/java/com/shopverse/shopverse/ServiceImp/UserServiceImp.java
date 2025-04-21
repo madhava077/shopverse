@@ -1,10 +1,9 @@
 package com.shopverse.shopverse.ServiceImp;
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shopverse.shopverse.Dto.UserDto;
 import com.shopverse.shopverse.Repository.UserRepository;
 import com.shopverse.shopverse.Service.UserService;
@@ -64,5 +63,13 @@ public class UserServiceImp implements UserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() ->new UserException(String.format("User with id %d not found", id)));
         userRepository.delete(user);
+    }
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user : users) {
+            userDtos.add(EntityTOUserDto(user));
+        }
+        return userDtos;
     }
 }
