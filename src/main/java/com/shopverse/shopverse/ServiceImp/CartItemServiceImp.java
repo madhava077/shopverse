@@ -6,7 +6,6 @@ import com.shopverse.shopverse.Dto.CartItemDto;
 import com.shopverse.shopverse.Exception.UserException;
 import com.shopverse.shopverse.Repository.CartItemRepository;
 import com.shopverse.shopverse.Service.CartItemService;
-import com.shopverse.shopverse.Service.ProductService;
 import com.shopverse.shopverse.model.CartItem;
 
 public class CartItemServiceImp implements CartItemService {
