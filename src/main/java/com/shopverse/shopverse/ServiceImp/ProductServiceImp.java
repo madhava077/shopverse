@@ -67,4 +67,8 @@ public class ProductServiceImp implements ProductService {
         }
         return productDtos;
 }
+    public Product getProductByIdReturnProduct(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() ->new ProductException(String.format("Product with id %d not found", id)));
+        return product;
+    }
 }

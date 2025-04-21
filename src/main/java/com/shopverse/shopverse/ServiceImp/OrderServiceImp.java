@@ -65,4 +65,9 @@ public class OrderServiceImp implements OrderService
         Orders order=ordersRepository.findById(id).orElseThrow(() ->new OrderException(String.format("Order with id %d not found", id)));
         ordersRepository.delete(order);
     }
+    public Orders getOrderByIdReturnOrder(Long id)
+    {
+        Orders order=ordersRepository.findById(id).orElseThrow(() ->new OrderException(String.format("Order with id %d not found", id)));
+        return order;
+    }
 }
