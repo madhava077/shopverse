@@ -47,6 +47,10 @@ public class UserServiceImp implements UserService {
         return EntityTOUserDto(user);
 
     }
+    public User getUserByIdReturnUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() ->new UserException(String.format("User with id %d not found", id)));
+        return user;
+    }
     public UserDto updateUser(Long id, UserDto userDto) {
         User user = userRepository.findById(id).orElseThrow(() ->new UserException(String.format("User with id %d not found", id)));
         
