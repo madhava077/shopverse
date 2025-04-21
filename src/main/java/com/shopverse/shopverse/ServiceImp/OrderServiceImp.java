@@ -2,14 +2,14 @@ package com.shopverse.shopverse.ServiceImp;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 import com.shopverse.shopverse.Repository.OrdersRepository;
 import com.shopverse.shopverse.Service.OrderService;
 import com.shopverse.shopverse.model.Orders;
 import com.shopverse.shopverse.Dto.OrdersDto;
 import com.shopverse.shopverse.Exception.OrderException;
-
+@Service
 public class OrderServiceImp implements OrderService
 {
     @Autowired

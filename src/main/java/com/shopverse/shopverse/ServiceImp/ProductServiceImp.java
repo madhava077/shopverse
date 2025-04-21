@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.shopverse.shopverse.Dto.ProductDto;
 import com.shopverse.shopverse.Exception.ProductException;
 import com.shopverse.shopverse.Repository.ProductRepository;
 import com.shopverse.shopverse.Service.ProductService;
 import com.shopverse.shopverse.model.Product;
+@Service
 
 public class ProductServiceImp implements ProductService {
     @Autowired

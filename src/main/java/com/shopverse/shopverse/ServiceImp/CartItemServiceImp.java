@@ -1,13 +1,14 @@
 package com.shopverse.shopverse.ServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.shopverse.shopverse.Dto.CartItemDto;
 import com.shopverse.shopverse.Exception.UserException;
 import com.shopverse.shopverse.Repository.CartItemRepository;
 import com.shopverse.shopverse.Service.CartItemService;
 import com.shopverse.shopverse.model.CartItem;
-
+@Service
 public class CartItemServiceImp implements CartItemService {
     @Autowired
     private CartItemRepository cartItemRepository;
