@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopverse.shopverse.Dto.CartItemDto;
-import com.shopverse.shopverse.Dto.ProductDto;
 import com.shopverse.shopverse.Service.CartItemService;
 
 import org.springframework.web.bind.annotation.PostMapping;
