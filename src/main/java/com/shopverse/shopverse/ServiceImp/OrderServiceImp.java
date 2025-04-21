@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import com.shopverse.shopverse.Repository.OrdersRepository;
-import com.shopverse.shopverse.Repository.ProductRepository;
 import com.shopverse.shopverse.Service.OrderService;
 import com.shopverse.shopverse.model.Orders;
 import com.shopverse.shopverse.Dto.OrdersDto;
