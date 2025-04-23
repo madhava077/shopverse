@@ -10,6 +10,7 @@ public interface ProductService {
     public ProductDto getProductById(Long id);
     public ProductDto updateProduct(Long id, ProductDto productDto);
     public void deleteProduct(Long id);
+    public List<ProductDto> getAllProducts();
     public Product getProductByIdReturnProduct(Long id);
     public List<ProductDto> searchProducts(String keyword);
 }
