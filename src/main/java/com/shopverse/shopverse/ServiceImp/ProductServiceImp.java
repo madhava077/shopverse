@@ -73,4 +73,13 @@ public class ProductServiceImp implements ProductService {
         Product product = productRepository.findById(id).orElseThrow(() ->new ProductException(String.format("Product with id %d not found", id)));
         return product;
     }
+    public List<ProductDto> searchProducts(String keyword) {
+    List<Product> products = productRepository.findByProductnameContainingIgnoreCase(keyword);
+    List<ProductDto> productDtos = new ArrayList<>();
+    for (Product product : products) {
+        productDtos.add(EntityTOProductDto(product));
+    }
+    return productDtos;
 }
+}
+
