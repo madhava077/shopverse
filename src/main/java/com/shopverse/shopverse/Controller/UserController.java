@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -22,7 +26,15 @@ public class UserController {
         UserDto createdUser = userService.createUser(userDto);
         return ResponseEntity.ok(createdUser);
     }
-
+    @GetMapping("login/{username}/{password}")
+    public ResponseEntity<UserDto> loginUser(@PathVariable String username, @PathVariable String password) {
+        UserDto userDto = new UserDto();
+        userDto.setUsername(username);
+        userDto.setPassword(password);
+        UserDto loggedInUser = userService.loginUser(userDto);
+        return ResponseEntity.ok(loggedInUser);
+    }
+   
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         UserDto userDto = userService.getUserById(id);

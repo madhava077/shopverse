@@ -40,7 +40,17 @@ public class UserServiceImp implements UserService {
         userDto.setPhoneNumber(user.getPhoneNumber());
         return userDto;
     }
-
+    public UserDto loginUser(UserDto userDto)
+    {
+        User user = userRepository.findByEmail(userDto.getEmail());
+        if (user == null) {
+            throw new UserException("User not found with this email");
+        }
+        if (!user.getPassword().equals(userDto.getPassword())) {
+            throw new UserException("Invalid password");
+        }
+        return EntityTOUserDto(user);
+    }
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() ->new UserException(String.format("User with id %d not found", id)));
       
