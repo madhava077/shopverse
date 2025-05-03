@@ -1,26 +1,15 @@
-# Use an official Maven image to build the application
-FROM maven:3.8.5-openjdk-17 AS build
+# Stage 1: Build the application
+FROM maven:3.9.8-eclipse-temurin-21 AS build
 
-# Set the working directory
 WORKDIR /app
-
-# Copy the project files
-COPY . .
-
-# Package the application
+COPY pom.xml .
+COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Use an OpenJDK image to run the application
-FROM openjdk:17-jdk-slim
-
-# Set the working directory
+# Stage 2: Run the application
+FROM openjdk:21-jdk
 WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 
-# Copy the packaged jar file from the build stage
-COPY --from=build /app/target/shopverse-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the application port
 EXPOSE 8080
-
-# Define the entry point
 ENTRYPOINT ["java", "-jar", "app.jar"]
