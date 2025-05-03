@@ -26,10 +26,10 @@ public class UserController {
         UserDto createdUser = userService.createUser(userDto);
         return ResponseEntity.ok(createdUser);
     }
-    @GetMapping("login/{username}/{password}")
-    public ResponseEntity<UserDto> loginUser(@PathVariable String username, @PathVariable String password) {
+    @GetMapping("login/{email}/{password}")
+    public ResponseEntity<UserDto> loginUser(@PathVariable String email, @PathVariable String password) {
         UserDto userDto = new UserDto();
-        userDto.setUsername(username);
+        userDto.setEmail(email);
         userDto.setPassword(password);
         UserDto loggedInUser = userService.loginUser(userDto);
         return ResponseEntity.ok(loggedInUser);

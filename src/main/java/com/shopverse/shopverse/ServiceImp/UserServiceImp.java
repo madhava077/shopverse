@@ -40,17 +40,30 @@ public class UserServiceImp implements UserService {
         userDto.setPhoneNumber(user.getPhoneNumber());
         return userDto;
     }
-    public UserDto loginUser(UserDto userDto)
-    {
-        User user = userRepository.findByEmail(userDto.getEmail());
-        if (user == null) {
-            throw new UserException("User not found with this email");
+  
+        public UserDto loginUser(UserDto userDto) {
+            String email = userDto.getEmail();
+            String password = userDto.getPassword();
+        
+            if (email == null || email.isEmpty()) {
+                throw new UserException("Email cannot be null or empty");
+            }
+            if (password == null || password.isEmpty()) {
+                throw new UserException("Password cannot be null or empty");
+            }
+            User user = userRepository.findByEmail(email);
+            if (user == null) {
+                throw new UserException("User not found with this email");
+            }
+    
+            if (!user.getPassword().equals(password)) {
+                throw new UserException("Invalid password");
+            }
+        
+            UserDto loggedInUser = EntityTOUserDto(user);
+            return loggedInUser;
         }
-        if (!user.getPassword().equals(userDto.getPassword())) {
-            throw new UserException("Invalid password");
-        }
-        return EntityTOUserDto(user);
-    }
+    
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() ->new UserException(String.format("User with id %d not found", id)));
       

@@ -1,5 +1,7 @@
 package com.shopverse.shopverse.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CartItemController {
     @Autowired
     private CartItemService cartItemService;
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<CartItemDto>> getCartItems(@PathVariable Long userId) {
+    List<CartItemDto> cartItems = cartItemService.getCartItemsForUser(userId);
+    return ResponseEntity.ok(cartItems);
+}
     @PostMapping("/add")
     public ResponseEntity<CartItemDto> addCartItem(@RequestBody CartItemDto cartItemDto) {
         CartItemDto createdCartItem = cartItemService.CreateCartItem(cartItemDto);

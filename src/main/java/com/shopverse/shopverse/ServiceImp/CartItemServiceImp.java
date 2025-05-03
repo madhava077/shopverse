@@ -1,5 +1,8 @@
 package com.shopverse.shopverse.ServiceImp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +41,18 @@ public class CartItemServiceImp implements CartItemService {
         cartItemDto.setProductid(cartItem.getProduct().getId());
         cartItemDto.setQuantity(cartItem.getQuantity());
         return cartItemDto;
+    }
+    public List<CartItemDto> getCartItemsForUser(Long userId) {
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        List<CartItemDto> cartItemDtos = new ArrayList<>();
+        for (CartItem cartItem : cartItems) {
+            CartItemDto cartItemDto = EntityTOCartItemDto(cartItem);
+            cartItemDtos.add(cartItemDto);
+        }
+        return cartItemDtos;
+    }
+    public void clearCartForUser(Long userId) {
+        cartItemRepository.deleteByUserId(userId);
     }
     public CartItemDto getCartItemById(Long id) {
         CartItem cartItem = cartItemRepository.findById(id).orElseThrow(() -> new UserException(String.format("CartItem with id %d not found", id)));
