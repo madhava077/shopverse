@@ -11,4 +11,5 @@ public interface CartItemService {
      public CartItemDto updateCartItem(Long id, CartItemDto cartItemDto);
      public void deleteCartItem(Long id);
      public List<CartItemDto> getCartItemsForUser(Long userId);
+     public void clearCartForUser(Long userId);
 }

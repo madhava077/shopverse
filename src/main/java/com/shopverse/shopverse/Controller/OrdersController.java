@@ -1,6 +1,7 @@
 package com.shopverse.shopverse.Controller;
 
 import com.shopverse.shopverse.Dto.OrdersDto;
+import com.shopverse.shopverse.Service.CartItemService;
 import com.shopverse.shopverse.Service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,18 @@ public class OrdersController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private CartItemService cartItemService;
+    //@PostMapping("/{userId}")
+//public ResponseEntity<OrdersDto> confirmOrder(@PathVariable Long userId) {
+    
+  //  OrdersDto confirmedOrder = orderService.placeOrderForUser(userId);
 
+
+    //cartItemService.clearCartForUser(userId);
+
+    //return ResponseEntity.ok(confirmedOrder);
+//}
     @PostMapping
     public ResponseEntity<OrdersDto> placeOrder(@RequestBody OrdersDto ordersDto) {
         OrdersDto placedOrder = orderService.placeOrder(ordersDto);
