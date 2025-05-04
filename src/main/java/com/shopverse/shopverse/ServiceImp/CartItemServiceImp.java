@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopverse.shopverse.Dto.CartItemDto;
+import com.shopverse.shopverse.Dto.OrderItemDto;
 import com.shopverse.shopverse.Exception.UserException;
 import com.shopverse.shopverse.Repository.CartItemRepository;
 import com.shopverse.shopverse.Service.CartItemService;
 import com.shopverse.shopverse.model.CartItem;
+
 @Service
 public class CartItemServiceImp implements CartItemService {
     @Autowired
@@ -19,6 +21,8 @@ public class CartItemServiceImp implements CartItemService {
     private ProductServiceImp productServiceImp;
     @Autowired
     private UserServiceImp userServiceImp;
+    @Autowired
+    private OrderItemServiceImp orderItemServiceImp;
 
     public CartItemDto CreateCartItem(CartItemDto cartItemDto) {
         CartItem cartItem = CartItemDtoTOEntity(cartItemDto);
@@ -53,6 +57,27 @@ public class CartItemServiceImp implements CartItemService {
     }
     public void clearCartForUser(Long userId) {
         cartItemRepository.deleteByUserId(userId);
+    }
+    public Double getTotalPriceForUser(Long userId) {
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        double totalPrice = 0.0;
+        for (CartItem cartItem : cartItems) {
+            totalPrice += cartItem.getProduct().getPrice() * cartItem.getQuantity();
+        }
+        return totalPrice;
+    }
+    public void orderitemsave(Long userId,Long orderId)
+    {
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        for (CartItem cartItem : cartItems) {
+            OrderItemDto orderItemdto = new OrderItemDto();
+            orderItemdto.setProductid(cartItem.getProduct().getId());
+            orderItemdto.setQuantity(cartItem.getQuantity());
+            orderItemdto.setOrderid(orderId);
+            orderItemdto.setPrice(cartItem.getProduct().getPrice());
+            orderItemServiceImp.createOrderItem(orderItemdto);
+        }
+        clearCartForUser(userId);        
     }
     public CartItemDto getCartItemById(Long id) {
         CartItem cartItem = cartItemRepository.findById(id).orElseThrow(() -> new UserException(String.format("CartItem with id %d not found", id)));

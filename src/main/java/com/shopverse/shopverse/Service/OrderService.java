@@ -12,6 +12,6 @@ public interface OrderService {
 
     void deleteOrder(Long id);
 
-
+    public OrdersDto bookOrder(Long userId);
     
 }
