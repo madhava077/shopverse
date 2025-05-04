@@ -51,11 +51,8 @@ public class UserServiceImp implements UserService {
             if (password == null || password.isEmpty()) {
                 throw new UserException("Password cannot be null or empty");
             }
-            User user = userRepository.findByEmail(email);
-            if (user == null) {
-                throw new UserException("User not found with this email");
-            }
-    
+            User user = userRepository.findByEmail(email).orElseThrow(() ->new UserException(String.format("Invalid email or password")));
+          
             if (!user.getPassword().equals(password)) {
                 throw new UserException("Invalid password");
             }

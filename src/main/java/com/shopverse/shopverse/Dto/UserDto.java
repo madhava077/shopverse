@@ -12,6 +12,11 @@ public class UserDto {
     public UserDto() {
     }
 
+    public UserDto(String email,String password) {
+        this.password = password;
+        this.email = email;
+    }
+
     public UserDto(Long id, String username, String password, String email, String address, String role,
             String phoneNumber) {
         this.id = id;

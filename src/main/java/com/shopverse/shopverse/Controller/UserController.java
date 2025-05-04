@@ -5,13 +5,14 @@ import com.shopverse.shopverse.Service.UserService;
 import com.shopverse.shopverse.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -20,6 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+private AuthenticationManager authenticationManager;
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
@@ -28,10 +31,13 @@ public class UserController {
     }
     @GetMapping("login/{email}/{password}")
     public ResponseEntity<UserDto> loginUser(@PathVariable String email, @PathVariable String password) {
-        UserDto userDto = new UserDto();
-        userDto.setEmail(email);
-        userDto.setPassword(password);
-        UserDto loggedInUser = userService.loginUser(userDto);
+         UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(email, password);
+
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        UserDto loggedInUser = userService.loginUser(new UserDto(email, password));
         return ResponseEntity.ok(loggedInUser);
     }
    
