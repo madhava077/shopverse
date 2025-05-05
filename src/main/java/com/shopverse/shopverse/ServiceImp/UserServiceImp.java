@@ -3,16 +3,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.shopverse.shopverse.Dto.UserDto;
 import com.shopverse.shopverse.Repository.UserRepository;
 import com.shopverse.shopverse.Service.UserService;
 import com.shopverse.shopverse.model.User;
 import com.shopverse.shopverse.Exception.UserException;
+
 @Service
 public class UserServiceImp implements UserService {
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Autowired
     UserRepository userRepository;
+
+    
     public UserDto createUser(UserDto userDto) {
         User user =UserDtoTOEntity(userDto);
         User savedUser = userRepository.save(user);
@@ -23,7 +30,7 @@ public class UserServiceImp implements UserService {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRole(userDto.getRole());
         user.setAddress(userDto.getAddress());
         user.setPhoneNumber(userDto.getPhoneNumber());
@@ -52,8 +59,8 @@ public class UserServiceImp implements UserService {
                 throw new UserException("Password cannot be null or empty");
             }
             User user = userRepository.findByEmail(email).orElseThrow(() ->new UserException(String.format("Invalid email or password")));
-          
-            if (!user.getPassword().equals(password)) {
+            
+            if (! passwordEncoder.matches(password,user.getPassword())) {
                 throw new UserException("Invalid password");
             }
         

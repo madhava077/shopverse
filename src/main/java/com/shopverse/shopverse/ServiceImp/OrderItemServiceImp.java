@@ -1,19 +1,23 @@
 package com.shopverse.shopverse.ServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.shopverse.shopverse.Dto.OrderItemDto;
 import com.shopverse.shopverse.Exception.OrderItemException;
 import com.shopverse.shopverse.Repository.OrderItemRepository;
 import com.shopverse.shopverse.Service.OrderItemService;
+import com.shopverse.shopverse.Service.OrderService;
 import com.shopverse.shopverse.model.OrderItem;
+
 @Service
 public class OrderItemServiceImp implements OrderItemService {
     @Autowired
     private OrderItemRepository orderItemRepository;
+    @Lazy
     @Autowired 
-    private OrderServiceImp orderServiceImp;
+    private OrderService orderService;
     @Autowired
     private ProductServiceImp productServiceImp;
     public OrderItemDto createOrderItem(OrderItemDto orderItemDto) {
@@ -24,7 +28,7 @@ public class OrderItemServiceImp implements OrderItemService {
     }
     private OrderItem OrderItemDtoTOEntity(OrderItemDto orderItemDto) {
         OrderItem orderItem = new OrderItem();
-        orderItem.setOrder(orderServiceImp.getOrderByIdReturnOrder(orderItemDto.getOrderid()));
+        orderItem.setOrder(orderService.getOrderByIdReturnOrder(orderItemDto.getOrderid()));
         orderItem.setProduct(productServiceImp.getProductByIdReturnProduct(orderItemDto.getProductid()));
         orderItem.setQuantity(orderItemDto.getQuantity());
         orderItem.setPrice(orderItemDto.getPrice());
@@ -46,7 +50,7 @@ public class OrderItemServiceImp implements OrderItemService {
     public OrderItemDto updateOrderItem(Long id, OrderItemDto orderItemDto) {
         OrderItem orderItem = orderItemRepository.findById(id).orElseThrow(() -> new OrderItemException(String.format("OrderItem with id %d not found", id)));
         
-            orderItem.setOrder(orderServiceImp.getOrderByIdReturnOrder(orderItemDto.getOrderid()));
+            orderItem.setOrder(orderService.getOrderByIdReturnOrder(orderItemDto.getOrderid()));
             orderItem.setProduct(productServiceImp.getProductByIdReturnProduct(orderItemDto.getProductid()));
             orderItem.setQuantity(orderItemDto.getQuantity());
             orderItem.setPrice(orderItemDto.getPrice());

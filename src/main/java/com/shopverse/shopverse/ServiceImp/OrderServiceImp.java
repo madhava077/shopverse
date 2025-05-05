@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopverse.shopverse.Repository.OrdersRepository;
-import com.shopverse.shopverse.Service.CartItemService;
+
 import com.shopverse.shopverse.Service.OrderService;
 import com.shopverse.shopverse.model.Orders;
 import com.shopverse.shopverse.Dto.OrdersDto;
@@ -18,8 +18,7 @@ public class OrderServiceImp implements OrderService
 {
     @Autowired
     private OrdersRepository ordersRepository;
-    @Autowired 
-    private CartItemService cartItemService;
+   
     @Autowired
     private UserServiceImp userServiceImp;
     public OrdersDto placeOrder(OrdersDto orderDto)
@@ -60,18 +59,7 @@ public class OrderServiceImp implements OrderService
         List<OrdersDto> orderDtos=orders.stream().map(this::EntityTOOrderDto).collect(Collectors.toList());
         return orderDtos;
     }
-    public OrdersDto bookOrder(Long UserId)
-    {
-        OrdersDto orderDto=new OrdersDto();
-        orderDto.setUser_id(UserId);
-        orderDto.setOrderDate(java.time.LocalDate.now());
-        orderDto.setTotalAmount(cartItemService.getTotalPriceForUser(UserId));
-        orderDto.setStatus("Pending");
-        OrdersDto savedorderdto=placeOrder(orderDto);
-        cartItemService.orderitemsave(orderDto.getUser_id(), orderDto.getId());
-        return savedorderdto;
-
-    }
+    
     public OrdersDto updateOrder(Long id, OrdersDto orderDto)
     {
         Orders order=ordersRepository.findById(id).orElseThrow(() ->new OrderException(String.format("Order with id %d not found", id)));

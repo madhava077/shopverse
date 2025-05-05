@@ -29,15 +29,7 @@ services:
     networks:
       - shopverse_net
 
-  frontend:
-    build:
-      context: ./Frontend
-    container_name: shopverse_frontend
-    ports:
-      - "5500:80" # Map local port 5500 to container port 80
-    networks:
-      - shopverse_net
-
+  
 networks:
   shopverse_net:
 

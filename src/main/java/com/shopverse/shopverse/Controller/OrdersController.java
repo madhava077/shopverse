@@ -15,11 +15,7 @@ public class OrdersController {
     @Autowired
     private OrderService orderService;
    
-    @PostMapping("/{userId}")
-    public ResponseEntity<OrdersDto> bookOrder(@PathVariable Long userId) {
-        OrdersDto orderDto = orderService.bookOrder(userId);
-        return ResponseEntity.ok(orderDto);
-    }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<OrdersDto> getOrderById(@PathVariable Long id) {

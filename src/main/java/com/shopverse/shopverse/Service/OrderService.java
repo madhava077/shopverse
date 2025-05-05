@@ -1,17 +1,19 @@
 package com.shopverse.shopverse.Service;
 
 import com.shopverse.shopverse.Dto.OrdersDto;
+import com.shopverse.shopverse.model.Orders;
 
 public interface OrderService {
 
-    OrdersDto placeOrder(OrdersDto ordersDto);
+    public OrdersDto placeOrder(OrdersDto ordersDto);
 
-    OrdersDto getOrderById(Long id);
+    public OrdersDto getOrderById(Long id);
 
-    OrdersDto updateOrder(Long id, OrdersDto ordersDto);
+    public OrdersDto updateOrder(Long id, OrdersDto ordersDto);
 
-    void deleteOrder(Long id);
+    public void deleteOrder(Long id);
 
-    public OrdersDto bookOrder(Long userId);
+    
+    public Orders getOrderByIdReturnOrder(Long id);
     
 }

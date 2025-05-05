@@ -23,13 +23,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/api/users/login/**", "/api/users").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
-                .requestMatchers("/api/delivery/**").hasRole("DELIVERY")
+                .requestMatchers( "/api/users").permitAll()
+                .requestMatchers("/api/products/all").permitAll()
+                .requestMatchers("/api/users/login/**").permitAll()
+                .requestMatchers("/api/orders/**").hasRole("ADMIN")
+                .requestMatchers("/api/orders/**").hasRole("CUSTOMER")
+                .requestMatchers("/api/cart-items/**").hasRole("CUSTOMER")
+                .requestMatchers("/api/order-items/**").hasRole("DELIVERY")
+                .requestMatchers("/api/order-items/**").hasRole("CUSTOMER")
                 .anyRequest().authenticated()
             )
-            .httpBasic(null); // Enable HTTP Basic Authentication
+            .httpBasic(); // ← No customizer, uses default
         return http.build();
     }
 
@@ -37,7 +41,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-      @Bean
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
