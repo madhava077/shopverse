@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/order-items/**").hasRole("CUSTOMER")
                 .anyRequest().authenticated()
             )
-            .httpBasic(); // ← No customizer, uses default
+            .httpBasic();
         return http.build();
     }
 

@@ -1,15 +1,21 @@
 package com.shopverse.shopverse.ServiceImp;
 
+import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.shopverse.shopverse.Dto.CartItemDto;
 import com.shopverse.shopverse.Dto.OrderItemDto;
 import com.shopverse.shopverse.Exception.OrderItemException;
 import com.shopverse.shopverse.Repository.OrderItemRepository;
+
 import com.shopverse.shopverse.Service.OrderItemService;
 import com.shopverse.shopverse.Service.OrderService;
 import com.shopverse.shopverse.model.OrderItem;
+
 
 @Service
 public class OrderItemServiceImp implements OrderItemService {
@@ -18,6 +24,10 @@ public class OrderItemServiceImp implements OrderItemService {
     @Lazy
     @Autowired 
     private OrderService orderService;
+    @Autowired
+    private CartItemServiceImp cartItemServiceImp;
+    
+
     @Autowired
     private ProductServiceImp productServiceImp;
     public OrderItemDto createOrderItem(OrderItemDto orderItemDto) {
@@ -42,6 +52,21 @@ public class OrderItemServiceImp implements OrderItemService {
         orderItemDto.setQuantity(orderItem.getQuantity());
         orderItemDto.setPrice(orderItem.getPrice());
         return orderItemDto;
+    }
+    public void OrderItems(Long userId){
+        List<CartItemDto> cartItems = cartItemServiceImp.getCartItemsForUser(userId);
+        for (CartItemDto cartItem : cartItems) {
+            OrderItemDto orderItemDto = new OrderItemDto();
+            orderItemDto.setOrderid(cartItem.getUserid());
+            orderItemDto.setProductid(cartItem.getProductid());
+            orderItemDto.setQuantity(cartItem.getQuantity());
+
+            orderItemDto.setPrice(productServiceImp.getProductByIdReturnProduct(cartItem.getProductid()).getPrice());
+            createOrderItem(orderItemDto);
+
+    }
+        cartItemServiceImp.clearCartForUser(userId);
+    
     }
     public OrderItemDto getOrderItemById(Long id) {
         OrderItem orderItem = orderItemRepository.findById(id).orElseThrow(() -> new OrderItemException(String.format("OrderItem with id %d not found", id)));
