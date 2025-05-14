@@ -25,7 +25,7 @@ import com.shopverse.shopverse.Service.ProductService;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) {
         ProductDto createdProduct = productService.createProduct(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);

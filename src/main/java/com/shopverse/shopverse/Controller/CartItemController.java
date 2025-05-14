@@ -11,6 +11,8 @@ import com.shopverse.shopverse.Dto.CartItemDto;
 
 import com.shopverse.shopverse.Service.CartItemService;
 
+import scala.concurrent.impl.FutureConvertersImpl.P;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +29,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CartItemController {
     @Autowired
     private CartItemService cartItemService;
+    @PostMapping("/")
+    public ResponseEntity<CartItemDto> createCartItem(@RequestBody CartItemDto cartItemDto) {
+        CartItemDto createdCartItem = cartItemService.CreateCartItem(cartItemDto);
+        return ResponseEntity.status(201).body(createdCartItem);
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<List<CartItemDto>> getCartItems(@PathVariable Long userId) {
     List<CartItemDto> cartItems = cartItemService.getCartItemsForUser(userId);

@@ -25,6 +25,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers( "/api/users").permitAll()
                 .requestMatchers("/api/products/all").permitAll()
+                .requestMatchers("/api/products/add").hasRole("ADMIN")
                 .requestMatchers("/api/users/login/**").permitAll()
                 .requestMatchers("/api/orders/**").hasRole("ADMIN")
                 .requestMatchers("/api/orders/**").hasRole("CUSTOMER")

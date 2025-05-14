@@ -17,10 +17,15 @@ import com.shopverse.shopverse.Exception.OrderException;
 public class OrderServiceImp implements OrderService
 {
     @Autowired
+    private CartItemServiceImp cartItemServiceImp;
+    @Autowired
     private OrdersRepository ordersRepository;
-   
+    @Autowired
+    private OrderItemServiceImp orderItemServiceImp;
     @Autowired
     private UserServiceImp userServiceImp;
+
+    
     public OrdersDto placeOrder(OrdersDto orderDto)
     {
         Orders order=OrderDtoTOEntity(orderDto);
@@ -59,7 +64,26 @@ public class OrderServiceImp implements OrderService
         List<OrdersDto> orderDtos=orders.stream().map(this::EntityTOOrderDto).collect(Collectors.toList());
         return orderDtos;
     }
-    
+    public List<OrdersDto> getOrdersByUserId(Long userId)
+    {
+        List<Orders> orders=ordersRepository.findByUserId(userId);
+        List<OrdersDto> orderDtos=orders.stream().map(this::EntityTOOrderDto).collect(Collectors.toList());
+        return orderDtos;
+    }
+    public OrdersDto createOrder(Long userId)
+    {
+        OrdersDto orderDto=new OrdersDto();
+        orderDto.setUser_id(userId);
+        orderDto.setOrderDate(java.time.LocalDate.now());
+        orderDto.setTotalAmount(cartItemServiceImp.getTotalPriceForUser(userId));
+        orderDto.setStatus("Pending"); 
+        orderItemServiceImp.OrderItems(userId);
+
+        return placeOrder(orderDto);
+
+
+    }
+
     public OrdersDto updateOrder(Long id, OrdersDto orderDto)
     {
         Orders order=ordersRepository.findById(id).orElseThrow(() ->new OrderException(String.format("Order with id %d not found", id)));

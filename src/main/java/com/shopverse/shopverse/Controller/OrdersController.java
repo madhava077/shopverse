@@ -14,7 +14,11 @@ public class OrdersController {
 
     @Autowired
     private OrderService orderService;
-   
+    @PostMapping
+    public ResponseEntity<OrdersDto> createOrder(Long userId) {
+        OrdersDto createdOrder = orderService.createOrder(userId);
+        return ResponseEntity.status(201).body(createdOrder);
+    }
     
 
     @GetMapping("/{id}")
