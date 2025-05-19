@@ -23,16 +23,15 @@ public class OrderItem {
     private Product product;
     @Column(name="quantity")
     private int quantity;
-    @Column(name="price")
-    private double price;
+    
     public OrderItem() {
     }
-    public OrderItem(Long id, Orders order, Product product, int quantity, double price) {
+    public OrderItem(Long id, Orders order, Product product, int quantity) {
         this.id = id;
         this.order = order;
         this.product = product;
         this.quantity = quantity;
-        this.price = price;
+     
     }
     public Long getId() {
         return id;
@@ -58,12 +57,7 @@ public class OrderItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public double getPrice() {
-        return price;
-    }
-    public void setPrice(double price) {
-        this.price = price;
-    }
+   
     
     
 }

@@ -41,7 +41,7 @@ public class OrderItemServiceImp implements OrderItemService {
         orderItem.setOrder(orderService.getOrderByIdReturnOrder(orderItemDto.getOrderid()));
         orderItem.setProduct(productServiceImp.getProductByIdReturnProduct(orderItemDto.getProductid()));
         orderItem.setQuantity(orderItemDto.getQuantity());
-        orderItem.setPrice(orderItemDto.getPrice());
+       
         return orderItem;
     }
     private OrderItemDto EntityTOOrderItemDto(OrderItem orderItem) {
@@ -50,7 +50,7 @@ public class OrderItemServiceImp implements OrderItemService {
         orderItemDto.setOrderid(orderItem.getOrder().getId());
         orderItemDto.setProductid(orderItem.getProduct().getId());
         orderItemDto.setQuantity(orderItem.getQuantity());
-        orderItemDto.setPrice(orderItem.getPrice());
+    
         return orderItemDto;
     }
     public void OrderItems(Long userId){
@@ -61,7 +61,7 @@ public class OrderItemServiceImp implements OrderItemService {
             orderItemDto.setProductid(cartItem.getProductid());
             orderItemDto.setQuantity(cartItem.getQuantity());
 
-            orderItemDto.setPrice(productServiceImp.getProductByIdReturnProduct(cartItem.getProductid()).getPrice());
+          
             createOrderItem(orderItemDto);
 
     }
@@ -78,7 +78,7 @@ public class OrderItemServiceImp implements OrderItemService {
             orderItem.setOrder(orderService.getOrderByIdReturnOrder(orderItemDto.getOrderid()));
             orderItem.setProduct(productServiceImp.getProductByIdReturnProduct(orderItemDto.getProductid()));
             orderItem.setQuantity(orderItemDto.getQuantity());
-            orderItem.setPrice(orderItemDto.getPrice());
+            
             OrderItem updatedOrderItem = orderItemRepository.save(orderItem);
             return EntityTOOrderItemDto(updatedOrderItem);
     }

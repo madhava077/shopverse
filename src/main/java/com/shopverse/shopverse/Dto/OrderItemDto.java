@@ -5,7 +5,7 @@ public class OrderItemDto {
     private Long orderid;
     private Long productid;
     private int quantity;
-    private double price;
+    
     public OrderItemDto() {
     }
     public OrderItemDto(Long id, Long orderid, Long productid, int quantity, double price) {
@@ -13,7 +13,7 @@ public class OrderItemDto {
         this.orderid = orderid;
         this.productid = productid;
         this.quantity = quantity;
-        this.price = price;
+      
     }
     public Long getId() {
         return id;
@@ -39,12 +39,7 @@ public class OrderItemDto {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public double getPrice() {
-        return price;
-    }
-    public void setPrice(double price) {
-        this.price = price;
-    }
+  
     
     
 }

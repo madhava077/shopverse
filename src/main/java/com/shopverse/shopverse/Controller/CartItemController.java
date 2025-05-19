@@ -11,7 +11,7 @@ import com.shopverse.shopverse.Dto.CartItemDto;
 
 import com.shopverse.shopverse.Service.CartItemService;
 
-import scala.concurrent.impl.FutureConvertersImpl.P;
+
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,23 +29,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CartItemController {
     @Autowired
     private CartItemService cartItemService;
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<CartItemDto> createCartItem(@RequestBody CartItemDto cartItemDto) {
         CartItemDto createdCartItem = cartItemService.CreateCartItem(cartItemDto);
         return ResponseEntity.status(201).body(createdCartItem);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/get/{userId}")
     public ResponseEntity<List<CartItemDto>> getCartItems(@PathVariable Long userId) {
     List<CartItemDto> cartItems = cartItemService.getCartItemsForUser(userId);
     return ResponseEntity.ok(cartItems);
 }
-    @PostMapping("/add")
-    public ResponseEntity<CartItemDto> addCartItem(@RequestBody CartItemDto cartItemDto) {
-        CartItemDto createdCartItem = cartItemService.CreateCartItem(cartItemDto);
-        return ResponseEntity.status(201).body(createdCartItem);
-    }
-    @GetMapping("/get/{id}")
+    @GetMapping("/getcartitem/{id}")
     public ResponseEntity<CartItemDto> getCartItemById(@PathVariable Long id) {
         CartItemDto cartItem = cartItemService.getCartItemById(id);
         return ResponseEntity.ok(cartItem);
