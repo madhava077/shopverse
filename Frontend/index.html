@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopverse Home</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        body {
+            background: #f5f5f7;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .center-container {
+            max-width: 350px;
+            margin: 120px auto;
+            background: #fff;
+            padding: 2.5rem 2rem 2rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.08);
+            text-align: center;
+        }
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.2rem;
+            color: #222;
+        }
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.2rem;
+            background: #5a67d8;
+            color: #fff;
+            font-size: 1.15rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s;
+            text-decoration: none;
+        }
+        .action-btn:last-child {
+            margin-bottom: 0;
+            background: #4fd1c5;
+        }
+        .action-btn:hover {
+            background: #434190;
+        }
+        .action-btn:last-child:hover {
+            background: #319795;
+        }
+    </style>
+</head>
+<body>
+    <div class="center-container">
+        <div class="welcome-title">Welcome to Shopverse</div>
+        <a class="action-btn" id="loginBtn" href="login.html">Login</a>
+        <a class="action-btn" id="registerBtn" href="register.html">Register</a>
+    </div>
+    <script>
+        // Optional: Add animation or further logic here
+        document.getElementById('loginBtn').addEventListener('click', function(e){
+            // You can add analytics or preloading here
+        });
+        document.getElementById('registerBtn').addEventListener('click', function(e){
+            // You can add analytics or preloading here
+        });
+    </script>
+</body>
+</html>
