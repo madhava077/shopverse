@@ -25,6 +25,7 @@ public class ProductServiceImp implements ProductService {
     private Product ProductDtoTOEntity(ProductDto productDto) {
          Product product = new Product();
          product.setProductname(productDto.getProductname());
+            product.setImageUrl(productDto.getImageUrl());
          product.setDescription(productDto.getDescription());
          product.setPrice(productDto.getPrice());
          product.setStock(productDto.getStock());
@@ -35,6 +36,7 @@ public class ProductServiceImp implements ProductService {
          ProductDto productDto = new ProductDto();
          productDto.setId(product.getId());
          productDto.setProductname(product.getProductname());
+            productDto.setImageUrl(product.getImageUrl());
          productDto.setDescription(product.getDescription());
          productDto.setPrice(product.getPrice());
          productDto.setStock(product.getStock());
@@ -49,6 +51,7 @@ public class ProductServiceImp implements ProductService {
         Product product = productRepository.findById(id).orElseThrow(() ->new ProductException(String.format("Product with id %d not found", id)));
         
             product.setProductname(productDto.getProductname());
+            product.setImageUrl(productDto.getImageUrl());
             product.setDescription(productDto.getDescription());
             product.setPrice(productDto.getPrice());
             product.setStock(productDto.getStock());

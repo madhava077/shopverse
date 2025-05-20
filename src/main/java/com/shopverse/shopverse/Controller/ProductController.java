@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ import com.shopverse.shopverse.Dto.ProductDto;
 import com.shopverse.shopverse.Service.ProductService;
 
 
-
+@CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -30,7 +31,8 @@ public class ProductController {
         ProductDto createdProduct = productService.createProduct(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
-    @PostMapping("/all")
+   @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @GetMapping("/all")
     public ResponseEntity<List<ProductDto>> getAllProducts() {
         List<ProductDto> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
@@ -40,6 +42,7 @@ public class ProductController {
         ProductDto product = productService.getProductById(id);
         return ResponseEntity.ok(product);
     }
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @PutMapping("/update/{id}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
         ProductDto updatedProduct = productService.updateProduct(id, productDto);

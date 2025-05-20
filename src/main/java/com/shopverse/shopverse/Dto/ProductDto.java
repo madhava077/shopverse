@@ -3,6 +3,7 @@ package com.shopverse.shopverse.Dto;
 public class ProductDto {
 	private Long id;
 	private String productname;
+	private String imageUrl;
 	private String description;
 	private double price;
 	private int stock;
@@ -28,6 +29,12 @@ public class ProductDto {
 	}
 	public void setProductname(String productname) {
 		this.productname = productname;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	public String getDescription() {
 		return description;

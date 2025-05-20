@@ -2,7 +2,6 @@ package com.shopverse.shopverse.Controller;
 
 import com.shopverse.shopverse.Dto.UserDto;
 import com.shopverse.shopverse.Service.UserService;
-import com.shopverse.shopverse.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

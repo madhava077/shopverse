@@ -21,17 +21,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/api/users/create").permitAll()
-                .requestMatchers("/api/users/login").permitAll()
+                .requestMatchers("/api/users/create","/api/products/all").permitAll()
+                .requestMatchers("/api/users/login/**").permitAll()
                 .requestMatchers("/api/users/details/**").hasAnyRole("CUSTOMER","ADMIN")
                 .requestMatchers("/api/users/update/**").hasAnyRole("CUSTOMER","ADMIN")
                 .requestMatchers("/api/users/delete/**").hasRole("ADMIN")
-                .requestMatchers("/api/products/all").permitAll()
-                .requestMatchers("/api/products/add").hasRole("ADMIN")
+                .requestMatchers("/api/products/add","/api/products/update/*").hasRole("ADMIN")
                 .requestMatchers("/api/products/getproduct/**").permitAll()
-                .requestMatchers("/api/products/update/**").hasRole("ADMIN")
                 .requestMatchers("/api/products/delete/**").hasRole("ADMIN")
                 .requestMatchers("/api/products/search").permitAll()
                 .requestMatchers("/api/orders/**").permitAll()
