@@ -20,12 +20,13 @@ import com.shopverse.shopverse.Dto.ProductDto;
 import com.shopverse.shopverse.Service.ProductService;
 
 
-@CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true")
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
+     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @PostMapping("/add")
     public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) {
         ProductDto createdProduct = productService.createProduct(productDto);
@@ -42,7 +43,6 @@ public class ProductController {
         ProductDto product = productService.getProductById(id);
         return ResponseEntity.ok(product);
     }
-    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @PutMapping("/update/{id}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
         ProductDto updatedProduct = productService.updateProduct(id, productDto);

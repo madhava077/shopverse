@@ -8,12 +8,11 @@
   <style>
     .product-image {
       width: 100%;
-      max-width: 220px;
-      border-radius: 10px;
-      margin-bottom: 1rem;
+      height: 200px;
       object-fit: cover;
-      background: #f5f5f5;
-      aspect-ratio: 1/1;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      background-color: #f0f0f0;
     }
   </style>
 </head>
@@ -90,29 +89,17 @@
         fetch("http://localhost:8080/api/products/add", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: 'include',
           body: JSON.stringify(jsonData),
         }).then(res => alert("Product added."));
       } else if (op === "update") {
-        fetch(`http://localhost:8080/api/products/update/${jsonData.id}`, {
-  method: "PUT",
-  headers: { "Content-Type": "application/json" },
-  credentials: "include", // Send cookies/session
-  body: JSON.stringify(jsonData),
-})
-.then(res => {
-  if (res.ok) {
-    alert("Product updated.");
-  } else {
-    alert("Update failed");
-  }
-})
-.catch(err => {
-  alert("Network or CORS error");
-  console.error(err);
-});
-
+        fetch(`http://localhost:8080/api/products/${jsonData.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jsonData),
+        }).then(res => alert("Product updated."));
       } else if (op === "delete") {
-        fetch(`http://localhost:8080/api/products/delete/${jsonData.id}`, {
+        fetch(`http://localhost:8080/api/products/${jsonData.id}`, {
           method: "DELETE",
         }).then(res => alert("Product deleted."));
       } else if (op === "view") {
@@ -122,7 +109,6 @@
             let html = data.map(p => `
               <div class="card mb-3">
                 <div class="card-body">
-                    <h5>${p.id}</h5>
                   <img src="${p.imageUrl}" alt="${p.productname}" class="product-image" />
                   <h5>${p.productname}</h5>
                   <p>${p.description}</p>
