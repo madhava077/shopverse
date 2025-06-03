@@ -1,5 +1,6 @@
 package com.shopverse.shopverse.Controller;
 
+import com.shopverse.shopverse.JwtUtil;
 import com.shopverse.shopverse.Dto.UserDto;
 import com.shopverse.shopverse.Service.UserService;
 
@@ -17,7 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
+    @Autowired
+private JwtUtil jwtUtil;
     @Autowired
     private UserService userService;
     @Autowired
@@ -28,17 +30,21 @@ private AuthenticationManager authenticationManager;
         UserDto createdUser = userService.createUser(userDto);
         return ResponseEntity.ok(createdUser);
     }
-    @GetMapping("login/{email}/{password}")
-    public ResponseEntity<UserDto> loginUser(@PathVariable String email, @PathVariable String password) {
-         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(email, password);
+    @PostMapping("/login")
+public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) {
+    Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    String jwt = jwtUtil.generateToken(userDto.getEmail());
+    return ResponseEntity.ok(new AuthResponse(jwt));
+}
 
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        UserDto loggedInUser = userService.loginUser(new UserDto(email, password));
-        return ResponseEntity.ok(loggedInUser);
-    }
+public static class AuthResponse {
+    private String token;
+    public AuthResponse(String token) { this.token = token; }
+    public String getToken() { return token; }
+}
    
     @GetMapping("details/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
