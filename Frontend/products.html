@@ -180,12 +180,14 @@
     <header>
   <h1>Shopverse</h1>
   <nav>
-    <a href="products.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="#">Cart</a>
-    <button onclick="location.href='login.html'">Login</button>
-    <button onclick="location.href='register.html'">Register</button>
-  </nav>
+  <a href="products.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="cart.html">Cart</a>
+  <button id="loginBtn" onclick="location.href='login.html'">Login</button>
+  <button id="registerBtn" onclick="location.href='register.html'">Register</button>
+  <button id="profileBtn" style="display:none;" onclick="location.href='profile.html'">Profile</button>
+  <button id="logoutBtn" style="display:none;" onclick="logout()">Logout</button>
+</nav>
 </header>
 
   

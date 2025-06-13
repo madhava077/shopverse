@@ -14,10 +14,10 @@ public class OrdersController {
 
     @Autowired
     private OrderService orderService;
-    @PostMapping
-    public ResponseEntity<OrdersDto> createOrder(Long userId) {
-        OrdersDto createdOrder = orderService.createOrder(userId);
-        return ResponseEntity.status(201).body(createdOrder);
+    @PostMapping("/{id}")
+    public ResponseEntity<OrdersDto> createOrder(@PathVariable Long id) {
+        OrdersDto createdOrder = orderService.createOrder(id);
+        return ResponseEntity.ok(createdOrder);
     }
     
 

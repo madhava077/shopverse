@@ -53,20 +53,19 @@ public class OrderItemServiceImp implements OrderItemService {
     
         return orderItemDto;
     }
-    public void OrderItems(Long userId){
+    public void OrderItems(Long userId,Long orderId) {
         List<CartItemDto> cartItems = cartItemServiceImp.getCartItemsForUser(userId);
         for (CartItemDto cartItem : cartItems) {
             OrderItemDto orderItemDto = new OrderItemDto();
-            orderItemDto.setOrderid(cartItem.getUserid());
+            orderItemDto.setOrderid(orderId);
             orderItemDto.setProductid(cartItem.getProductid());
             orderItemDto.setQuantity(cartItem.getQuantity());
 
-          
             createOrderItem(orderItemDto);
 
-    }
+        }
         cartItemServiceImp.clearCartForUser(userId);
-    
+
     }
     public OrderItemDto getOrderItemById(Long id) {
         OrderItem orderItem = orderItemRepository.findById(id).orElseThrow(() -> new OrderItemException(String.format("OrderItem with id %d not found", id)));

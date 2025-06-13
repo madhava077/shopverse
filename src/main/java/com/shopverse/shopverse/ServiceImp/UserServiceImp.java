@@ -47,7 +47,14 @@ public class UserServiceImp implements UserService {
         userDto.setPhoneNumber(user.getPhoneNumber());
         return userDto;
     }
-  
+        public String getUserRoleByEmail(String email) {
+            User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException("User not found with email: " + email));
+            return user.getRole();
+        }
+        public Long getUserIdByEmail(String email) {
+            User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException("User not found with email: " + email));
+            return user.getId();
+        }
         public UserDto loginUser(UserDto userDto) {
             String email = userDto.getEmail();
             String password = userDto.getPassword();

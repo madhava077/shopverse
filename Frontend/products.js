@@ -1,3 +1,30 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token');
+  const loginBtn = document.getElementById('loginBtn');
+  const registerBtn = document.getElementById('registerBtn');
+  const profileBtn = document.getElementById('profileBtn');
+
+  if (token) {
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (registerBtn) registerBtn.style.display = 'none';
+    if (profileBtn) profileBtn.style.display = '';
+    if (logoutBtn) logoutBtn.style.display = '';
+  } else {
+    if (loginBtn) loginBtn.style.display = '';
+    if (registerBtn) registerBtn.style.display = '';
+    if (profileBtn) profileBtn.style.display = 'none';
+
+  }
+});
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+  localStorage.removeItem('userid');
+  window.location.href = "login.html";
+}
+
+
+
 document.addEventListener('DOMContentLoaded', async () => {
   const grid = document.getElementById('productsGrid');
   const loadingDiv = document.getElementById('productsLoading');
@@ -19,6 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     products.forEach(product => {
       const {
+        id,
         imageUrl,
         productname,
         description,
@@ -48,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="desc">${description ? description.substring(0, 70) : ''}</div>
         <p class="price">₹${price != null ? price : '--'}</p>
         ${stockHtml}
-        <button ${buttonDisabled ? 'disabled' : ''}>Add to Cart</button>
+        <button ${buttonDisabled ? 'disabled' : ''} onclick="addToCart(${product.id})">Add to Cart</button>
       `;
       grid.appendChild(card);
     });
@@ -56,3 +84,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadingDiv.outerHTML = `<div class="error">Failed to load products. Please try again later.</div>`;
   }
 });
+window.addToCart =async function(productId) {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+  const userId = localStorage.getItem('userid');
+  if (!token || !role) {
+    alert('Please login to add items to your cart.');
+    window.location.href = 'login.html';
+    return;
+  }
+  const cartItem = {
+    userid: Number(userId),
+    productid: Number(productId),
+    quantity: 1
+  };
+
+  try {
+    const response = await fetch('http://localhost:8080/api/cart-items/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // If your backend requires JWT for this endpoint, add:
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(cartItem)
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      alert('Failed to add to cart: ' + error);
+      return;
+    }
+
+    alert('Product added to cart!');
+  } catch (err) {
+    alert('Error adding to cart: ' + err.message);
+  }
+};

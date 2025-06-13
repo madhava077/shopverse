@@ -36,14 +36,22 @@ public ResponseEntity<?> loginUser(@RequestBody UserDto userDto) {
         new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtUtil.generateToken(userDto.getEmail());
-    return ResponseEntity.ok(new AuthResponse(jwt));
+    String role= userService.getUserRoleByEmail(userDto.getEmail());
+    Long userId = userService.getUserIdByEmail(userDto.getEmail());
+    return ResponseEntity.ok(new AuthResponse(jwt,role, userId));
 }
-
-
 public static class AuthResponse {
     private String token;
-    public AuthResponse(String token) { this.token = token; }
+    private String role;
+    private Long userId;
+    public AuthResponse(String token, String role, Long userId) {
+        this.token = token;
+        this.role = role;
+        this.userId = userId;
+    }
     public String getToken() { return token; }
+    public String getRole() { return role; }
+    public Long getUserId() { return userId; }
 }
    
     @GetMapping("details/{id}")

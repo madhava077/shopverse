@@ -19,7 +19,9 @@
 <body class="bg-light">
   <div class="container py-5">
     <h2 class="mb-4 text-center">Shopverse Admin Dashboard</h2>
-
+    <div class="text-end mb-3">
+  <button id="logoutBtn" class="btn btn-danger">Logout</button>
+</div>
     <!-- Operation Selector -->
     <div class="mb-4">
       <label for="operation" class="form-label">Select Operation</label>
@@ -64,7 +66,12 @@
   <script>
     const form = document.getElementById("productForm");
     const productList = document.getElementById("productList");
-
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+   localStorage.removeItem('token');
+   localStorage.removeItem('role');
+   localStorage.removeItem("userid");
+    window.location.href = "login.html";
+    });
     function changeOperation() {
       const op = document.getElementById("operation").value;
 
@@ -84,31 +91,48 @@
       const op = document.getElementById("operation").value;
       const formData = new FormData(form);
       const jsonData = Object.fromEntries(formData.entries());
-
+      const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role');
+      const userid = localStorage.getItem('userid');
+      if (!token || role !== 'admin') {
+        alert("You must be logged in as an admin to perform this operation.");
+        window.location.href = "login.html";
+        return;
+      }
+      
+ 
       if (op === "add") {
         fetch("http://localhost:8080/api/products/add", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
+          headers: { "Content-Type": "application/json", 
+         "Authorization": "Bearer " + token},
           body: JSON.stringify(jsonData),
         }).then(res => alert("Product added."));
       } else if (op === "update") {
-        fetch(`http://localhost:8080/api/products/${jsonData.id}`, {
+        fetch(`http://localhost:8080/api/products/update/${jsonData.id}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", 
+         "Authorization": "Bearer " + token
+        },
+         
           body: JSON.stringify(jsonData),
         }).then(res => alert("Product updated."));
+        alert(token);
       } else if (op === "delete") {
-        fetch(`http://localhost:8080/api/products/${jsonData.id}`, {
+        fetch(`http://localhost:8080/api/products/delete/${jsonData.id}`, {
           method: "DELETE",
+          headers: { "Authorization": "Bearer " + token}
         }).then(res => alert("Product deleted."));
       } else if (op === "view") {
-        fetch("http://localhost:8080/api/products/all")
+        fetch("http://localhost:8080/api/products/all", {
+          
+        })
           .then(res => res.json())
           .then(data => {
             let html = data.map(p => `
               <div class="card mb-3">
                 <div class="card-body">
+                  <h5>${p.id}</h5>
                   <img src="${p.imageUrl}" alt="${p.productname}" class="product-image" />
                   <h5>${p.productname}</h5>
                   <p>${p.description}</p>

@@ -76,10 +76,11 @@ public class OrderServiceImp implements OrderService
         orderDto.setUser_id(userId);
         orderDto.setOrderDate(java.time.LocalDate.now());
         orderDto.setTotalAmount(cartItemServiceImp.getTotalPriceForUser(userId));
-        orderDto.setStatus("Pending"); 
-        orderItemServiceImp.OrderItems(userId);
-
-        return placeOrder(orderDto);
+        orderDto.setStatus("Pending");
+        OrdersDto placeOrder= placeOrder(orderDto);
+        orderItemServiceImp.OrderItems(userId,placeOrder.getId());
+        
+        return placeOrder;
 
 
     }

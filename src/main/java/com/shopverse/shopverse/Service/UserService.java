@@ -16,5 +16,6 @@ public interface UserService {
     public User getUserByIdReturnUser(Long id);
     public UserDto getUserById(Long id);
     public UserDto loginUser(UserDto userDto);
-   
+   public String getUserRoleByEmail(String email);
+   public Long getUserIdByEmail(String email);
 }

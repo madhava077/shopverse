@@ -14,6 +14,8 @@ import com.shopverse.shopverse.Service.CartItemService;
 
 import com.shopverse.shopverse.model.CartItem;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CartItemServiceImp implements CartItemService {
     @Autowired
@@ -47,7 +49,7 @@ public class CartItemServiceImp implements CartItemService {
         return cartItemDto;
     }
     public List<CartItemDto> getCartItemsForUser(Long userId) {
-        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        List<CartItem> cartItems = cartItemRepository.findByUser_Id(userId);
         List<CartItemDto> cartItemDtos = new ArrayList<>();
         for (CartItem cartItem : cartItems) {
             CartItemDto cartItemDto = EntityTOCartItemDto(cartItem);
@@ -55,11 +57,12 @@ public class CartItemServiceImp implements CartItemService {
         }
         return cartItemDtos;
     }
+    @Transactional
     public void clearCartForUser(Long userId) {
-        cartItemRepository.deleteByUserId(userId);
+        cartItemRepository.deleteByUser_Id(userId);
     }
     public Double getTotalPriceForUser(Long userId) {
-        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        List<CartItem> cartItems = cartItemRepository.findByUser_Id(userId);
         double totalPrice = 0.0;
         for (CartItem cartItem : cartItems) {
             totalPrice += cartItem.getProduct().getPrice() * cartItem.getQuantity();
