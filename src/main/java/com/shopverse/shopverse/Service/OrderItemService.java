@@ -1,5 +1,7 @@
 package com.shopverse.shopverse.Service;
 
+import java.util.List;
+
 import com.shopverse.shopverse.Dto.OrderItemDto;
 
 
@@ -12,5 +14,6 @@ public interface OrderItemService {
     public OrderItemDto updateOrderItem(Long id, OrderItemDto orderItemDto);
     
     public void deleteOrderItem(Long id);
-    
-}
+    public List<OrderItemDto> getOrderItemsByOrderId(Long orderId);
+
+    }

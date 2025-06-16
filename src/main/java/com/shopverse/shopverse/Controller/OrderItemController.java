@@ -3,6 +3,8 @@ package com.shopverse.shopverse.Controller;
 import com.shopverse.shopverse.Dto.OrderItemDto;
 import com.shopverse.shopverse.Service.OrderItemService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +38,10 @@ public class OrderItemController{
     public ResponseEntity<String> deleteOrderItem(@PathVariable Long id) {
         orderItemService.deleteOrderItem(id);
         return ResponseEntity.ok("Order item deleted successfully");
+    }
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<List<OrderItemDto>> getOrderItemsByOrderId(@PathVariable Long orderId) {
+        List<OrderItemDto> dtos = orderItemService.getOrderItemsByOrderId(orderId);
+        return ResponseEntity.ok(dtos);
     }
 }

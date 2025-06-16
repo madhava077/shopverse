@@ -1,5 +1,7 @@
 package com.shopverse.shopverse.Service;
 
+import java.util.List;
+
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 
 import com.shopverse.shopverse.Dto.OrdersDto;
@@ -17,5 +19,7 @@ public interface OrderService {
 
     public OrdersDto createOrder(Long userId);
     public Orders getOrderByIdReturnOrder(Long id);
+    public List<OrdersDto> getAllOrders();
+    public List<OrdersDto> getOrdersByUserIdDtos(Long userId);
     
 }

@@ -96,6 +96,11 @@ public class OrderServiceImp implements OrderService
             Orders updatedOrder=ordersRepository.save(order);
             return EntityTOOrderDto(updatedOrder);
      }
+     public List<OrdersDto> getOrdersByUserIdDtos(Long userId) {
+    List<Orders> orders = ordersRepository.findByUserId(userId);
+    List<OrdersDto> orderDtos = orders.stream().map(this::EntityTOOrderDto).collect(Collectors.toList());
+    return orderDtos;
+}
     public void deleteOrder(Long id)
     {
         Orders order=ordersRepository.findById(id).orElseThrow(() ->new OrderException(String.format("Order with id %d not found", id)));

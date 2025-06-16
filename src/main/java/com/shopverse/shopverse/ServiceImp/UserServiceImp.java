@@ -90,7 +90,6 @@ public class UserServiceImp implements UserService {
         
             user.setUsername(userDto.getUsername());
             user.setEmail(userDto.getEmail());
-            user.setPassword(userDto.getPassword());
             user.setRole(userDto.getRole());
             user.setAddress(userDto.getAddress());
             user.setPhoneNumber(userDto.getPhoneNumber());
@@ -98,6 +97,16 @@ public class UserServiceImp implements UserService {
             return EntityTOUserDto(updatedUser);
  
         }
+    public UserDto updateUserPassword(Long id, String newPassword,String oldPassword) {
+    
+        User user = userRepository.findById(id).orElseThrow(() ->new UserException(String.format("User with id %d not found", id)));
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new UserException("Old password is incorrect");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        User updatedUser = userRepository.save(user);
+        return EntityTOUserDto(updatedUser);
+    }
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() ->new UserException(String.format("User with id %d not found", id)));
         userRepository.delete(user);

@@ -34,9 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   localStorage.setItem('token', data.token);
   localStorage.setItem('userid', data.userId);
+  localStorage.setItem('role', data.role);
   if (data.role === 'ADMIN') {
-    localStorage.setItem('role', 'admin');
+    
     window.location.href = 'admin-dashboard.html'; 
+  }
+  if( data.role === 'DELIVERY') {
+    window.location.href = 'delivery-dashboard.html'; 
   }
 
   alert('Login successful! Welcome');

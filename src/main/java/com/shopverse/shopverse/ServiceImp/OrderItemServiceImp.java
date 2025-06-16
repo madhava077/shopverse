@@ -1,7 +1,7 @@
 package com.shopverse.shopverse.ServiceImp;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -66,6 +66,11 @@ public class OrderItemServiceImp implements OrderItemService {
         }
         cartItemServiceImp.clearCartForUser(userId);
 
+    }
+    @Override
+    public List<OrderItemDto> getOrderItemsByOrderId(Long orderId) {
+        List<OrderItem> items = orderItemRepository.findByOrderId(orderId);
+        return items.stream().map(this::EntityTOOrderItemDto).collect(Collectors.toList());
     }
     public OrderItemDto getOrderItemById(Long id) {
         OrderItem orderItem = orderItemRepository.findById(id).orElseThrow(() -> new OrderItemException(String.format("OrderItem with id %d not found", id)));
