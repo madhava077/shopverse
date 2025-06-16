@@ -94,7 +94,7 @@
       const token = localStorage.getItem('token');
       const role = localStorage.getItem('role');
       const userid = localStorage.getItem('userid');
-      if (!token || role !== 'admin') {
+      if (!token || role !== 'ADMIN') {
         alert("You must be logged in as an admin to perform this operation.");
         window.location.href = "login.html";
         return;
