@@ -15,6 +15,15 @@ services:
     networks:
       - shopverse_net
 
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: shopverse_frontend
+    ports:
+      - "80:80"
+    networks:
+      - shopverse_net
+
   db:
     image: mysql:8.0
     container_name: shopverse_db
@@ -29,7 +38,6 @@ services:
     networks:
       - shopverse_net
 
-  
 networks:
   shopverse_net:
 
